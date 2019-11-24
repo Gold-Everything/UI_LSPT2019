@@ -3,7 +3,11 @@ from django.http import HttpResponse
 from django.template import loader
 
 def index(request):
-    return HttpResponse('HELLO WORLD! Your at the search app index view')
+    template = loader.get_template('index.html')
+    context = {
+        # 'showings_list': showings_list,
+    }
+    return HttpResponse(template.render(context, request))
     '''
     # replace bylaws.html with whatever html you want to load
     # context is a dictionary, put what you want in it then you can use

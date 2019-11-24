@@ -121,4 +121,5 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
+    '/path/to/my_project/my_app/static/',
 )
