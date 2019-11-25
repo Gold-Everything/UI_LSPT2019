@@ -1,25 +1,25 @@
 {% load static %}
 
 <html>
-	<head>
-		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-		<link rel = "stylesheet" href = "{% static styles.css %}">
-		<link href="{% static '/bootstrap-4.3.1-dist/css/bootstrap.css' %}" rel="stylesheet">
-	</head>
 
-	<body class = "p-3 mb-2 bg-secondary text-white">
+<head>
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="{% static styles.css %}">
+	<link href="{% static '/bootstrap-4.3.1-dist/css/bootstrap.css' %}" rel="stylesheet">
+</head>
 
-
-		<div class = "text-center h1 text-danger">The Honorable Search Engine</div>
-		<form>
-  <div class="form">
-    <input type="search" class="form-control center_div text-center" id="inputSearch" placeholder="What are you looking for?">
-  </div>
-  <div class = "container col-md-1 col-md-offset-1">
-  <button type="submit" class="btn btn-danger"> Search </button>
-</div>
+<body class="p-3 mb-2 bg-secondary text-white">
+	<div class="text-center h1 text-danger">The Honorable Search Engine</div>
+	<form>
+		<div class="form">
+			<input type="search" class="form-control center_div text-center" id="inputSearch"
+				placeholder="What are you looking for?">
+		</div>
+		<div class="container col-md-1 col-md-offset-1">
+			<button type="submit" class="btn btn-danger"> Search </button>
+		</div>
 	</form>
-	</body>
+</body>
 
 </html>
