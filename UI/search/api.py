@@ -3,8 +3,8 @@ from django.http import HttpResponse
 import requests
 import json
 
-RANKING_API_URL = ""
-STORE_API_URL = ""
+RANKING_API_URL = "" # TO BE FILLED IN WITH LOCATION OF RANKING
+STORE_API_URL = "" # TO BE FILLED IN WITH LOCATION OF DOC_DATA_STORE
 
 DOC_COUNT_RETURNED = 300
 
