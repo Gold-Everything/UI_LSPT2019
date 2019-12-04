@@ -3,8 +3,15 @@ from django.http import HttpResponse
 import requests
 import json
 
+<<<<<<< HEAD
 RANKING_API_URL = "" # TO BE FILLED IN WITH LOCATION OF RANKING
 STORE_API_URL = "" # TO BE FILLED IN WITH LOCATION OF DOC_DATA_STORE
+=======
+RANKING_API_URL = "lspt-rank2.cs.rpi.edu"
+#RANKING_API_URL = "lspt-rank1.cs.rpi.edu"
+
+STORE_API_URL = ""
+>>>>>>> ee38a7bafcc12bd77f050c4e79af3277eb246582
 
 DOC_COUNT_RETURNED = 300
 
@@ -58,8 +65,11 @@ def getRawResults(query, weights):
     
     return json.dumps(merged_results)
 
+# makeResults calls parseQuery, getSnippet
+# rawDocuments is the JSON object returned by getRawResults
 # def makeResults(rawDocuments):
 
+# def parseQuery(query):
 
 # def getSnippet(document, keywords):
 
@@ -93,7 +103,7 @@ def callDocstore(docIds):
     '''
     # https://errose28.github.io/lspt-doc-data-store/#get
     # Call to data store is a GET
-    response = requests.get(RANKING_API_URL, params={'id': docIds})
+    response = requests.get(STORE_API_URL, params={'id': docIds})
     if (response):
         content = response.content
         # should get back documents json
