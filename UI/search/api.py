@@ -3,15 +3,11 @@ from django.http import HttpResponse
 import requests
 import json
 
-<<<<<<< HEAD
-RANKING_API_URL = "" # TO BE FILLED IN WITH LOCATION OF RANKING
-STORE_API_URL = "" # TO BE FILLED IN WITH LOCATION OF DOC_DATA_STORE
-=======
 RANKING_API_URL = "lspt-rank2.cs.rpi.edu"
 #RANKING_API_URL = "lspt-rank1.cs.rpi.edu"
 
 STORE_API_URL = ""
->>>>>>> ee38a7bafcc12bd77f050c4e79af3277eb246582
+
 
 DOC_COUNT_RETURNED = 300
 
