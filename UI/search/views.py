@@ -22,7 +22,7 @@ def index(request):
     return HttpResponse(template.render(context, request))
     '''
 
-def search_results(request):
+def results(request):
     '''
     I think this is the entry point for running our API calls and generating search results?
     We do the following:
@@ -30,11 +30,12 @@ def search_results(request):
     2. set the context using the results of calling getRawResults and makeResults
     '''
     template = loader.get_template('results.html')
-    
+    query = request.GET["query"]
+    weights = {"popularity": "0.87", "recency": "0.45", "exact": "true"}
     #not sure what the request argument is or how to get the form data
     raw_results = api.getRawResults(query, weights)
     
-    finale_result = api.makeResults(raw_results)
+    final_results = api.makeResults(raw_results)
 
     #add a function to transform the list of jsons returned from makeResults into the actual context Dict?
     context = transformResults(final_results)

@@ -3,7 +3,7 @@ from django.http import HttpResponse
 import requests
 import json
 
-RANKING_API_URL = "lspt-rank2.cs.rpi.edu"
+RANKING_API_URL = "http://lspt-rank2.cs.rpi.edu"
 #RANKING_API_URL = "lspt-rank1.cs.rpi.edu"
 
 STORE_API_URL = ""
