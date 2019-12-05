@@ -22,12 +22,12 @@ def getRawResults(query, weights):
     Function to be trigger by query request, will call callDocstore and callRanking
     Inputs: Form data from user: string query, list of weights
     Returns:
-       JSON of merged data of the form: 
-       { rank :  
-             { 
-               "id": <id>, 
+       JSON of merged data of the form:
+       { rank :
+             {
+               "id": <id>,
                "score": <score>,
-               "url": <url>, 
+               "url": <url>,
                "title": <title>,
                "body": <body>
              },
@@ -46,7 +46,7 @@ def getRawResults(query, weights):
     total_results = len(docIds_list)
     merged_results = {}
     for rank in range (1, total_results+1):
-        merged_results[rank] = {} #adding key and empty dict for current rank 
+        merged_results[rank] = {} #adding key and empty dict for current rank
         #append ID
         merged_results[rank]["id"] = docIds_list[rank-1]
         #append score
@@ -58,7 +58,7 @@ def getRawResults(query, weights):
         merged_results[rank]["title"] = doc_results_dict["documents"][rank-1]["title"]
         #append doc text (same assumption as for url)
         merged_results[rank]["body"] = doc_results_dict["documents"][rank-1]["body"]
-    
+
     return json.dumps(merged_results)
 
 # makeResults calls parseQuery, getSnippet
@@ -78,7 +78,7 @@ def callRanking(query, weights):
     if (response):
         content = response.content
         # should get back something like {"1": "0.57", "2": "0.87", "3": "0.05", ..., "300": "0.45"}
-        ranked_doc_ids = json.loads(content)
+        return json.loads(content)
     else:
         raise Exception("No response from ranking")
 
@@ -103,6 +103,6 @@ def callDocstore(docIds):
     if (response):
         content = response.content
         # should get back documents json
-        documents = json.loads(content)
+        return json.loads(content)
     else:
         raise Exception("No response from data store")
