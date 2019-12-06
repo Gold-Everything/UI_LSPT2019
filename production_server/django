@@ -1,0 +1,22 @@
+server {
+    listen 80;
+    server_name lspt-query2.cs.rpi.edu; # customize with your domain name
+
+    location / {
+        # django running in uWSGI
+        uwsgi_pass unix:///run/uwsgi/app/django/socket;
+        include uwsgi_params;
+        uwsgi_read_timeout 300s;
+        client_max_body_size 32m;
+    }
+
+    location /static/ {
+       # static files
+       alias /home/static/; # ending slash is required
+    }
+
+    location /media/ {
+        # media files, uploaded by users
+        alias /home/media/; # ending slash is required
+    }
+}
