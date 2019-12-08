@@ -77,3 +77,55 @@ above and uncomment and alter the following lines to match:
 
 > exit
 
+#### Install Grafana
+
+1. See official instructions at
+
+> https://grafana.com/docs/grafana/latest/installation/debian/
+
+2. Once installed, start and check that its working with:
+
+> sudo systemctl start grafana-server
+
+> sudo systemctl status grafana-server
+
+#### Install Jmeter
+
+1. First make sure you have Java 8 or higher, check with:
+> java -version
+2. create directory where you want to install jmeter and go to it
+3. download jmeter with:
+> wget http://mirror.olnevhost.net/pub/apache//jmeter/binaries/apache-jmeter-5.2.1.tgz
+4. unzip with:
+> tar -zxvf apache-jmeter-5.2.1.tgz
+5. Move to directory:
+> ../apache-jmeter-5.2.1/bin
+6. Start Jmeter GUI with:
+> ./jmeter
+
+### Creating Load Tests with Jmeter GUI
+
+It is easiest to create each test with Jmeter GUI, but recomended to run them in the command line.
+
+#### Creating Basic Load Test .jmx file
+1. Move to Directory where jmeter is installed and go to:
+> ../apache-jmeter-5.2.1/bin
+2. Start Jmeter GUI with:
+> ./jmeter
+3. Once in GUI, name your test plan
+4. right-click current test in left panel and add thread-group
+5. Set number of threads and Ramp-up time (add any other properties or extra threads as needed)
+6. Make sure Backend Listener is set to send test data to influxdb:
+* right-click test in left pannel > add > listener > backend listener
+* make sure graphite listener is selected in drop down. Port should match that from what was editted in the influxdb.conf file under graphite
+7. Add http request to thread: right-click thread-group in left panel : add > sampler > http request
+* set IP, Port, Request type, and Path for request to use for given thread in the test
+8. Once youve added all the threads you want, save the test (test will be stored in .jmx file)
+
+(To try out the test within the GUI hit the play button. With Data being streamed to backed, you wont see anything in the GUI but if the server terminal is open, you can see the requests)
+
+### Running Load Tests
+
+
+
+
