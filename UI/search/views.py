@@ -33,17 +33,36 @@ def results(request):
     query = request.GET["query"]
     weights = {"popularity": "0.87", "recency": "0.45", "exact": "true"}
     #not sure what the request argument is or how to get the form data
-    raw_results = api.getRawResults(query, weights)
+    #raw_results = api.getRawResults(query, weights)
     
-    final_results = api.makeResults(raw_results)
+    #final_results = api.makeResults(raw_results)
 
     #add a function to transform the list of jsons returned from makeResults into the actual context Dict?
-    context = transformResults(final_results)
+    #context = transformResults(final_results)
 
-    #context = {
-        # 'showings_list': showings_list,
-    #}
+    context = {
+                "resultsDict":
+                { 
+                    'a':
+                     {
+                       "id": 1,
+                       "score": 2,
+                       "url": "www.rpi.edu",
+                       "title": "The Honorable",
+                       "body": "Shirley"
+                     },
+
+                    'b':
+                     {
+                       "id": 2,
+                       "score": 5,
+                       "url": "www.rpi.edu",
+                       "title": "The Honorable1",
+                       "body": "Shirley1"
+                     }
+                 }   
+             }
     
-    return HttpResponse(template.render(context, request))
+    return render(request, "results.html",context)
     
     #return HttpResponse('Here are your results')

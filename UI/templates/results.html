@@ -9,11 +9,20 @@
 
 	</head>
 
-	<body class = "p-3 mb-2 text-white">
-
+	<body>
+	{% block content %}
 	<div>
-		<h1>Hello! Where are my results?</h1>
+		<h1>Results:</h1>
+		{% for rank,value in resultsDict.items %}
+			{% for field,value2 in value.items %}
+				{% if field == "title" %}
+				<li> {{ value2 }} </li>
+				{% endif %}
+				
+			{% endfor %}
+		{% endfor %}
 	</div>
+	{% endblock content %}
 
 
 
