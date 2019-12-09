@@ -143,7 +143,6 @@ def parseQuery(query):
 def getSnippet(document, query):
     # Find keywords in document if possible, if not found, backup plan
     # TODO: Discuss specifics of finding snippet from keywords
-<<<<<<< HEAD
     index = document.lower().find(query.lower())
     snippet = ""
     # Make sure document is at least 100 characters
@@ -166,12 +165,7 @@ def getSnippet(document, query):
         snippet = document[0:100]    
 
     return snippet
-=======
-    '''
-
-    '''
-    return
->>>>>>> bf08b67b698ccca8bf6c04d24d1b152c5877d1b3
+    
 
 def callRanking(query, weights, results):
     '''
