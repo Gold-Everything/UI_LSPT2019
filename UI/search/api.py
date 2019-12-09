@@ -3,7 +3,7 @@ from django.http import HttpResponse
 import requests
 import json
 
-RANKING_API_URL = "http://lspt-rank2.cs.rpi.edu"
+RANKING_API_URL = "http://lspt-rank1.cs.rpi.edu"
 #RANKING_API_URL = "lspt-rank1.cs.rpi.edu"
 
 STORE_API_URL = ""
@@ -36,6 +36,7 @@ def getRawResults(query, weights):
     '''
     # Get back JSON response of ranked doc ids (identifier->scores)
     rank_results_dict = callRanking(query, weights)
+    print(rank_results_dict)
     # as of python 3.7 dict should maintain order of insertions so assuming that
     # docIds_list will be in order of url ranking high to low
     docIds_list = rank_results_dict.keys()
