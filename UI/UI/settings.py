@@ -25,7 +25,7 @@ SECRET_KEY = '^s95+pg!y_s9fwbc8*%wwkct3^j4+^b3=eg=_nw$_oa$^w1_xo'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "lspt-query2.cs.rpi.edu"]
+ALLOWED_HOSTS = ["127.0.0.1", "lspt-query2.cs.rpi.edu", "localhost"]
 
 
 # Application definition
