@@ -60,12 +60,40 @@ def getRawResults(query, weights):
 
 # makeResults calls parseQuery, getSnippet
 # rawDocuments is the JSON object returned by getRawResults
-# def makeResults(rawDocuments):
+def makeResults(rawDocuments, query):
+    # Assuming that the list of documents is given to us in ranked order...
+    loadedJSON = json.loads(rawDocuments)
+    results = []
+    for page in loadedJson:
+        url = page["url"]
+        title = page["title"]
+        body = page["body"]
 
-# def parseQuery(query):
+        # Use the original query to obtain keywords
+        keyWords = parseQuery(query)
+        snip = getSnippet(body, keyWords)
 
-# def getSnippet(document, keywords):
+        # Add relevant items to some container to be used in making results page
+        # Including: title, url, and snippet, for each page
+        # Dependent on what we want to send to the results html
 
+    return results
+
+# Removes all stop words from queries to obtain a list of keywords from the query
+# Used in to find where to obtain the snippet for the results page
+def parseQuery(query):
+    # List of stop words?
+    # TODO: Not sure exactly what stopwords we want to ignore, cause some of these may be more relevant in search
+    stopwords = ["the", "of", "to", "and", "in", "said", "for", "that", "was", "on", "he", "is", "with", "at", "by", "it", "from", "as", "be", "were", "an", "have", "his", "but", "has", "are", "not", "who", "they", "its", "had", "will", "would", "about", "been", "this", "their", "new", "or", "which", "we", "more", "after", "us", "percent", "up", "one", "people"]
+
+    queryList = query.split()
+    keyWords = [word for word in queryList if word.lower() not in stopwords]
+    return keyWords
+
+def getSnippet(document, keywords):
+    # Find keywords in document if possible, if not found, backup plan
+    # TODO: Discuss specifics of finding snippet from keywords
+    return
 
 def callRanking(query, weights):
     # Call to ranking is a POST
