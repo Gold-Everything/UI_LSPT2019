@@ -3,21 +3,22 @@ from django.http import HttpResponse
 import requests
 import json
 
-RANKING_API_URL = "http://lspt-rank1.cs.rpi.edu"
+RANKING_API_URL = "http://lspt-rank1.cs.rpi.edu:5000/search"
 #RANKING_API_URL = "lspt-rank1.cs.rpi.edu"
 
 STORE_API_URL = ""
 
 
-DOC_COUNT_RETURNED = 300
+DOC_COUNT_RETURNED = 10
 
 def search(request):
     #return makeResults(getRawResults(query, weights))
     query = request.GET.get('query', '')
     weights = request.GET.get('weights', '')
-    return HttpResponse(f"You searched for {query} with weights {weights}")
+    results = DOC_COUNT_RETURNED
+    return HttpResponse(f"You searched for {query} with weights {weights} and {results} results")
 
-def getRawResults(query, weights):
+def getRawResults(query, weights, results):
     '''
     Function to be trigger by query request, will call callDocstore and callRanking
     Inputs: Form data from user: string query, list of weights
@@ -35,7 +36,7 @@ def getRawResults(query, weights):
        }
     '''
     # Get back JSON response of ranked doc ids (identifier->scores)
-    rank_results_dict = callRanking(query, weights)
+    rank_results_dict = callRanking(query, weights, results)
     print(rank_results_dict)
     # as of python 3.7 dict should maintain order of insertions so assuming that
     # docIds_list will be in order of url ranking high to low
@@ -96,10 +97,10 @@ def getSnippet(document, keywords):
     # TODO: Discuss specifics of finding snippet from keywords
     return
 
-def callRanking(query, weights):
+def callRanking(query, weights, results):
     # Call to ranking is a POST
     # where weights is like "weights": {"popularity": "0.87", "recency": "0.45", "exact": "true"}
-    payload = {'query': query, 'weights': weights, 'results': DOC_COUNT_RETURNED}
+    payload = {'query': query, 'weights': weights, 'results': results}
     response = requests.post(RANKING_API_URL, data=json.dumps(payload))
     if (response):
         content = response.content
