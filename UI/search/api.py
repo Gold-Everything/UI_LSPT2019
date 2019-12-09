@@ -3,15 +3,25 @@ from django.http import HttpResponse
 import requests
 import json
 
+#verified for ranking1
 RANKING_API_URL = "http://lspt-rank1.cs.rpi.edu:5000/search"
-#RANKING_API_URL = "lspt-rank1.cs.rpi.edu"
+#RANKING_API_URL = "lspt-rank2.cs.rpi.edu"
 
 STORE_API_URL = ""
 
-
+# fixed number of results to ask for per query, for testing purposes
 DOC_COUNT_RETURNED = 10
 
+
 def search(request):
+    '''
+    Dummy functions to test Query page. Checks that we recieved query and send verification
+    to the user. Does not call other search engine components
+    Input: http request object
+    Output: HttpResponse object containing string reporting search to user
+    Modifies: none
+    Requires: none
+    '''
     #return makeResults(getRawResults(query, weights))
     query = request.GET.get('query', '')
     weights = request.GET.get('weights', '')
@@ -21,7 +31,11 @@ def search(request):
 def getRawResults(query, weights, results):
     '''
     Function to be trigger by query request, will call callDocstore and callRanking
-    Inputs: Form data from user: string query, list of weights
+    Inputs:
+        1. query(string) - query entered by user
+        2. weights( json/dict ) - weights for search, takes the form:
+            {"popularity": "0.87", "recency": "0.45", "exact": "true"}
+        2. results(int) - number of results to get
     Returns:
        JSON of merged data of the form:
        { rank :
@@ -34,6 +48,9 @@ def getRawResults(query, weights, results):
              },
              ...
        }
+    Modifies: none
+    Requires: args not null
+
     '''
     # Get back JSON response of ranked doc ids (identifier->scores)
     rank_results_dict = callRanking(query, weights, results)
@@ -63,6 +80,26 @@ def getRawResults(query, weights, results):
 # makeResults calls parseQuery, getSnippet
 # rawDocuments is the JSON object returned by getRawResults
 def makeResults(rawDocuments, query):
+    '''
+    Make results takes the documents returned from getRawresults and the query and generates
+    the data needed to populate the results page. It will call parseQuery and getSnippet
+    Inputs: 
+        1. rawDocuments - json of the form:
+        JSON of merged data of the form:
+        { rank :
+             {
+               "id": <id>,
+               "score": <score>,
+               "url": <url>,
+               "title": <title>,
+               "body": <body>
+             },
+             ...
+       }
+       2. query(string)
+    Returns:
+
+    '''
     # Assuming that the list of documents is given to us in ranked order...
     loadedJSON = json.loads(rawDocuments)
     results = []
