@@ -72,8 +72,8 @@ def makeResults(rawDocuments, query):
         body = page["body"]
 
         # Use the original query to obtain keywords
-        keyWords = parseQuery(query)
-        snip = getSnippet(body, keyWords)
+        #keyWords = parseQuery(query)
+        #snip = getSnippet(body, keyWords)
 
         # Add relevant items to some container to be used in making results page
         # Including: title, url, and snippet, for each page
