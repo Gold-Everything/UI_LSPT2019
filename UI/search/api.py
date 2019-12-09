@@ -77,8 +77,6 @@ def getRawResults(query, weights, results):
 
     return json.dumps(merged_results)
 
-# makeResults calls parseQuery, getSnippet
-# rawDocuments is the JSON object returned by getRawResults
 def makeResults(rawDocuments, query):
     '''
     Make results takes the documents returned from getRawresults and the query and generates
@@ -98,7 +96,23 @@ def makeResults(rawDocuments, query):
        }
        2. query(string)
     Returns:
-
+        Dictionary of the following form:
+        context = {
+                    "resultsDict":
+                    {
+                        'a':
+                        {
+                        "id": 1,
+                        "score": 2,
+                        "url": "www.rpi.edu",
+                        "title": "The Honorable",
+                        "body": "Shirley"
+                        },
+                     ...
+                    }
+                  }
+    Modifies: none
+    Requires: valid input format
     '''
     # Assuming that the list of documents is given to us in ranked order...
     loadedJSON = json.loads(rawDocuments)
@@ -107,14 +121,10 @@ def makeResults(rawDocuments, query):
         url = page["url"]
         title = page["title"]
         body = page["body"]
-
+                
         # Use the original query to obtain keywords
-        #keyWords = parseQuery(query)
-        #snip = getSnippet(body, keyWords)
-
-        # Add relevant items to some container to be used in making results page
-        # Including: title, url, and snippet, for each page
-        # Dependent on what we want to send to the results html
+        keyWords = parseQuery(query)
+        snip = getSnippet(body, keyWords)
 
     return results
 
@@ -132,9 +142,24 @@ def parseQuery(query):
 def getSnippet(document, keywords):
     # Find keywords in document if possible, if not found, backup plan
     # TODO: Discuss specifics of finding snippet from keywords
+    '''
+
+    '''
     return
 
 def callRanking(query, weights, results):
+    '''
+    This function calles the ranking components API and returns their results
+    Inputs:
+        1. query(string) - query entered by user
+        2. weights( json/dict ) - weights for search, takes the form:
+            {"popularity": "0.87", "recency": "0.45", "exact": "true"}
+        2. results(int) - number of results to get
+    Outputs: dict of id's to scores in order of rank in the form (if results was 300)
+         {"1": "0.57", "2": "0.87", "3": "0.05", ..., "300": "0.45"}
+    Modifies: none
+    Requires: RANKING_API_URL is correct
+    '''
     # Call to ranking is a POST
     # where weights is like "weights": {"popularity": "0.87", "recency": "0.45", "exact": "true"}
     payload = {'query': query, 'weights': weights, 'results': results}
@@ -151,6 +176,8 @@ def callDocstore(docIds):
     DDS wants us to specify the fields we want,
     http://docdatastore/documents?id=someID,anotherID,andtheotherIDs&fields=url,title,body
     response will look like
+    calls to DDS are done piecemeal. In the final version we will need to loop through
+    multiple calls in order to put together all of the results
     {
       "documents": [
           {
@@ -160,8 +187,12 @@ def callDocstore(docIds):
           }
       ]
     }
+    Inputs: Dict from callRanking of form:
+         {"1": "0.57", "2": "0.87", "3": "0.05", ..., "300": "0.45"}
+    Outputs: Dict of same form as response from DDS
+    Modifies: none
+    Requires: none
     '''
-    # https://errose28.github.io/lspt-doc-data-store/#get
     # Call to data store is a GET
     response = requests.get(STORE_API_URL, params={'id': docIds})
     if (response):
