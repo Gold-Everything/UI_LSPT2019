@@ -155,7 +155,7 @@ def getSnippet(document, query):
         if index < 50:
             snippet = document[0:100]
         # Case: query in last 50 characters, return last 100 chars of document
-        else if index > (len(document) - 50):
+        elif index > (len(document) - 50):
             snippet = document[len(document)-101:len(document)-1]
         # Case: query in middle of document anywhere, return 50 before and 50 after index of query
         else:
