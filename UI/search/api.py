@@ -7,7 +7,7 @@ import json
 RANKING_API_URL = "http://lspt-rank1.cs.rpi.edu:5000/search"
 #RANKING_API_URL = "lspt-rank2.cs.rpi.edu"
 
-STORE_API_URL = ""
+STORE_API_URL = "http://lspt-dds1.cs.rpi.edu:8080/"
 
 # fixed number of results to ask for per query, for testing purposes
 DOC_COUNT_RETURNED = 10
