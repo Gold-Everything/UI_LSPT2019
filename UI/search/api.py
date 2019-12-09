@@ -90,10 +90,32 @@ def parseQuery(query):
     keyWords = [word for word in queryList if word.lower() not in stopwords]
     return keyWords
 
-def getSnippet(document, keywords):
+# Function to produce a snippet of text from the document to display to the user
+def getSnippet(document, query):
     # Find keywords in document if possible, if not found, backup plan
     # TODO: Discuss specifics of finding snippet from keywords
-    return
+    index = document.lower().find(query.lower())
+    snippet = ""
+    # Make sure document is at least 100 characters
+    # If not, return entire document
+    if len(document) < 100:
+        return document
+    # If the query was found, exact match, return a valid snippet
+    if index != 0:
+        # Case: query in first 50 chars, return first 100 chars of document
+        if index < 50:
+            snippet = document[0:100]
+        # Case: query in last 50 characters, return last 100 chars of document
+        else if index > (len(document) - 50):
+            snippet = document[len(document)-101:len(document)-1]
+        # Case: query in middle of document anywhere, return 50 before and 50 after index of query
+        else:
+            snippet = document[index-50:index+50] 
+    # If query not found in document, return first 100 chars
+    else:
+        snippet = document[0:100]    
+
+    return snippet
 
 def callRanking(query, weights):
     # Call to ranking is a POST
