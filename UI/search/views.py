@@ -33,7 +33,7 @@ def results(request):
     query = request.GET["query"]
     weights = {"popularity": "0.87", "recency": "0.45", "exact": "true"}
     #not sure what the request argument is or how to get the form data
-    raw_results = api.getRawResults(query, weights)
+    raw_results = api.getRawResults(query, weights, 10)
     
     final_results = api.makeResults(raw_results)
 
