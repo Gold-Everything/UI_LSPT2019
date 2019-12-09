@@ -81,7 +81,7 @@ def makeResults(rawDocuments, query):
     '''
     Make results takes the documents returned from getRawresults and the query and generates
     the data needed to populate the results page. It will call parseQuery and getSnippet
-    Inputs: 
+    Inputs:
         1. rawDocuments - json of the form:
         JSON of merged data of the form:
         { rank :
