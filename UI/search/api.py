@@ -15,7 +15,7 @@ DOC_COUNT_RETURNED = 10
 
 def search(request):
     '''
-    Dummy functions to test Query page. Checks that we recieved query and send verification
+    Dummy function to test Query page. Checks that we recieved query and send verification
     to the user. Does not call other search engine components
     Input: http request object
     Output: HttpResponse object containing string reporting search to user
@@ -128,10 +128,16 @@ def makeResults(rawDocuments, query):
 
     return results
 
-# Removes all stop words from queries to obtain a list of keywords from the query
-# Used in to find where to obtain the snippet for the results page
 def parseQuery(query):
-    # List of stop words?
+    '''
+    Removes all stop words from queries to obtain a list of keywords from the query
+    Used in to find where to obtain the snippet for the results page
+    Inputs: query(string) - string containing raw query
+    Returns: list of keywords for use in snippet generation
+    Modifies: none
+    Requires: none
+    '''
+    # List of stop words
     # TODO: Not sure exactly what stopwords we want to ignore, cause some of these may be more relevant in search
     stopwords = ["the", "of", "to", "and", "in", "said", "for", "that", "was", "on", "he", "is", "with", "at", "by", "it", "from", "as", "be", "were", "an", "have", "his", "but", "has", "are", "not", "who", "they", "its", "had", "will", "would", "about", "been", "this", "their", "new", "or", "which", "we", "more", "after", "us", "percent", "up", "one", "people"]
 
@@ -139,11 +145,22 @@ def parseQuery(query):
     keyWords = [word for word in queryList if word.lower() not in stopwords]
     return keyWords
 
-# Function to produce a snippet of text from the document to display to the user
 def getSnippet(document, query):
-    # Find keywords in document if possible, if not found, backup plan
-    # TODO: Discuss specifics of finding snippet from keywords
-    index = document.lower().find(query.lower())
+    '''
+    Find keywords in document if possible, if not found, display first 100 words of doc
+    Function to produce a snippet of text from the document to display to the user
+    Inputs: 
+        1. document(string) - text containing raw document
+        2. query(list of strings) - valid keywords to match snippet
+    Returns: string containing 100 chars with match in the middle or first 100 chars
+        of document if no match is found
+    Modifies: none
+    Requires: none
+    '''
+    #TODO: adjust method to accomodate list of individual keywords rather than
+    #exact matching whole query
+    whole_query = " ".join(query)
+    index = document.lower().find(whole_query.lower())
     snippet = ""
     # Make sure document is at least 100 characters
     # If not, return entire document
