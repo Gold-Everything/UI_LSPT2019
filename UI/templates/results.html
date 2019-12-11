@@ -16,7 +16,9 @@
 		{% for rank,value in resultsDict.items %}
 			{% for field,value2 in value.items %}
 				{% if field == "title" %}
+				<div class = "container">
 				<li> {{ value2 }} </li>
+				</div>
 				{% endif %}
 				
 			{% endfor %}
